@@ -1,0 +1,1 @@
+"""Legal Search MCP Server"""
