@@ -115,15 +115,6 @@ OPENAI_API_KEY=your_openai_api_key
 GOOGLE_API_KEY=your_google_api_key
 ```
 
-4. Run the MCP server:
-```bash
-# Stdio transport (default)
-python -m legal_mcp.src.server
-
-# SSE transport for web deployment
-MCP_TRANSPORT=sse MCP_HOST=0.0.0.0 MCP_PORT=8000 python -m legal_mcp.src.server
-```
-
 ### MCP Tools
 
 The server provides five tools for legal research:
@@ -154,18 +145,28 @@ The server provides five tools for legal research:
 1. Ensure you have the required API keys configured in `.env`
 2. Download the benchmark dataset from Hugging Face or use the included `benchmark.csv`
 
+### Command-Line Arguments
+
+All benchmark scripts support the following arguments:
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `--limit` | Number of questions to run | All (150) |
+| `--workers` | Number of parallel workers | 3 |
+
 ### Closed Book Benchmark
 
 ```bash
 cd benchmark/legal_close_book
 
-# GPT-5.1 (High reasoning)
+# Run all 150 questions
 python closed_book_benchmark_gpt_5.1_high.py
 
-# Claude Sonnet 4.5 (Max Thinking)
-python closed_book_benchmark_claude_sonnet_4.5_max_thinking.py
+# Run first 10 questions with 5 parallel workers
+python closed_book_benchmark_gpt_5.1_high.py --limit 10 --workers 5
 
-# Gemini 2.5 Pro (High)
+# Other models
+python closed_book_benchmark_claude_sonnet_4.5_max_thinking.py
 python closed_book_benchmark_gemini_2.5_high.py
 ```
 
@@ -174,13 +175,14 @@ python closed_book_benchmark_gemini_2.5_high.py
 ```bash
 cd benchmark/legal_naive_rag
 
-# GPT-5.1 (High reasoning)
+# Run all 150 questions
 python rag_benchmark_gpt_5.1_high.py
 
-# Claude Sonnet 4.5 (Max Thinking)
-python rag_benchmark_claude_4.5_sonnet_max_thinking.py
+# Run first 10 questions with 5 parallel workers
+python rag_benchmark_gpt_5.1_high.py --limit 10 --workers 5
 
-# Gemini 2.5 Pro (High)
+# Other models
+python rag_benchmark_claude_4.5_sonnet_max_thinking.py
 python rag_benchmark_gemini_2.5_high.py
 ```
 
@@ -189,16 +191,17 @@ python rag_benchmark_gemini_2.5_high.py
 ```bash
 cd benchmark/legal_mcp_rag
 
-# GPT-5.1 (High reasoning)
+# Run all 150 questions
 python mcp_benchmark_gpt_5.1_high.py
 
-# Claude Sonnet 4.5 (Max Thinking)
-python mcp_benchmark_claude_sonnet_4.5_max_thinking.py
+# Run first 10 questions with 5 parallel workers
+python mcp_benchmark_gpt_5.1_high.py --limit 10 --workers 5
 
-# Gemini 2.5 Pro (High)
+# Other models
+python mcp_benchmark_claude_sonnet_4.5_max_thinking.py
 python mcp_benchmark_gemini_2.5_pro_high.py
 
-# Gemini 2.5 Pro (High) with explicit guidance (ablation)
+# Ablation study with explicit guidance
 python mcp_benchmark_gemini_2.5_pro_high_guided.py
 ```
 
