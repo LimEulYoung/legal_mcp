@@ -211,24 +211,80 @@ Results are saved as JSON files in the `result/` subdirectory of each benchmark 
 
 ### Overall Performance (Accuracy %)
 
-| Model | Closed Book | Naïve RAG | Agentic RAG | Δ Naïve |
-|-------|-------------|-----------|-------------|---------|
-| Claude 4.5 (Max-Think) | 51.33 | 84.00 | **94.67** | +10.67 |
-| GPT-5.1 (High) | 54.00 | 86.00 | **96.67** | +10.67 |
-| Gemini 2.5 (High) | 60.67 | **89.33** | 73.33 | -16.00 |
+Agentic RAG outperforms baselines for GPT and Claude, but Gemini shows performance degradation.
+
+#### Closed Book
+
+| Model | Total | Civil | Criminal | Public |
+|-------|-------|-------|----------|--------|
+| Claude 4.5 (Non-Think) | 46.67 | 45.71 | 45.00 | 50.00 |
+| Claude 4.5 (Max-Think) | 51.33 | 45.71 | 52.50 | 60.00 |
+| GPT-5.1 (None) | 43.33 | 48.57 | 37.50 | 40.00 |
+| GPT-5.1 (Low) | 54.00 | 45.71 | 65.00 | 57.50 |
+| GPT-5.1 (Medium) | 58.67 | 51.43 | 60.00 | 70.00 |
+| GPT-5.1 (High) | 54.00 | 45.71 | 57.50 | 65.00 |
+| Gemini 2.5 (Low) | 53.33 | 48.57 | 52.50 | 62.50 |
+| Gemini 2.5 (High) | 60.67 | 55.71 | 65.00 | 65.00 |
+
+#### Naïve RAG
+
+| Model | Total | Civil | Criminal | Public |
+|-------|-------|-------|----------|--------|
+| Claude 4.5 (Non-Think) | 82.00 | 82.86 | 75.00 | 87.50 |
+| Claude 4.5 (Max-Think) | 84.00 | 82.86 | 87.50 | 82.50 |
+| GPT-5.1 (None) | 68.67 | 71.43 | 62.50 | 70.00 |
+| GPT-5.1 (Low) | 77.33 | 81.43 | 77.50 | 70.00 |
+| GPT-5.1 (Medium) | 84.67 | 84.29 | 82.50 | 87.50 |
+| GPT-5.1 (High) | 86.00 | 82.86 | 90.00 | 87.50 |
+| Gemini 2.5 (Low) | 82.67 | 85.71 | 80.00 | 80.00 |
+| Gemini 2.5 (High) | **89.33** | 88.57 | **92.50** | 87.50 |
+
+#### Agentic RAG (Ours)
+
+| Model | Total | Civil | Criminal | Public |
+|-------|-------|-------|----------|--------|
+| Claude 4.5 (Non-Think) | 84.00 | 88.57 | 70.00 | 90.00 |
+| Claude 4.5 (Max-Think) | **94.67** | 97.14 | 90.00 | **95.00** |
+| GPT-5.1 (None) | 43.33 | 40.00 | 42.50 | 50.00 |
+| GPT-5.1 (Low) | 82.00 | 81.43 | 77.50 | 87.50 |
+| GPT-5.1 (Medium) | 95.33 | 98.57 | 90.00 | **95.00** |
+| GPT-5.1 (High) | **96.67** | **100.00** | **92.50** | **95.00** |
+| Gemini 2.5 (Low) | 81.33 | 85.71 | 75.00 | 80.00 |
+| Gemini 2.5 (High) | 73.33 | 65.71 | 77.50 | 82.50 |
 
 ### Tool-Use Dynamics
 
-| Model | Avg Calls | search_cases | get_case_content | Lookup Ratio |
-|-------|-----------|--------------|------------------|--------------|
-| Claude 4.5 (Max-Think) | 10.29 | 837 | 355 | 42.4% |
-| GPT-5.1 (High) | 16.61 | 1,115 | 706 | **63.3%** |
-| Gemini 2.5 (High) | 3.29 | 382 | 0 | 0.0% |
+Lookup Ratio = `get_case_content` / `search_cases` (measures deep exploration behavior)
 
-**Key Findings:**
-- **Deep Exploration** (GPT-5.1): High judgment lookup ratio (63.3%) correlates with best performance
-- **Efficient Utilization** (Claude): Achieves comparable accuracy with fewer lookups
-- **Search-Lookup Disconnection** (Gemini): Zero lookup ratio despite searching, leading to performance degradation
+| Model | Acc. | Δ Naïve | Avg Calls | search_cases | get_case | search_stat | get_stat | list_art | Lookup Ratio |
+|-------|------|---------|-----------|--------------|----------|-------------|----------|----------|--------------|
+| Claude 4.5 (Non-Think) | 84.00 | +2.00 | 11.15 | 891 | 416 | 92 | 268 | 5 | 46.7% |
+| Claude 4.5 (Max-Think) | 94.67 | +10.67 | 10.29 | 837 | 355 | 80 | 264 | 7 | 42.4% |
+| GPT-5.1 (None) | 43.33 | -25.33 | 2.27 | 154 | 1 | 82 | 103 | 0 | 0.6% |
+| GPT-5.1 (Low) | 82.00 | +4.67 | 4.39 | 379 | 29 | 86 | 156 | 9 | 7.7% |
+| GPT-5.1 (Medium) | 95.33 | +10.67 | 10.59 | 835 | 299 | 105 | 328 | 22 | 35.8% |
+| GPT-5.1 (High) | 96.67 | +10.67 | 16.61 | 1,115 | **706** | 145 | 495 | 31 | **63.3%** |
+| Gemini 2.5 (Low) | 81.33 | -1.34 | 4.40 | 480 | 0 | 48 | 124 | 8 | 0.0% |
+| Gemini 2.5 (High) | 73.33 | -16.00 | 3.29 | 382 | 0 | 12 | 97 | 3 | 0.0% |
+
+### Key Findings
+
+Three distinct tool-use patterns were observed:
+
+1. **Deep Exploration** (GPT-5.1)
+   - Highest judgment lookup ratio (63.3%) correlates with best performance (96.67%)
+   - Reasoning effort increase leads to systematic tool usage increase
+   - GPT-5.1 (High) achieved **100% accuracy** on Civil Law questions
+
+2. **Efficient Utilization** (Claude)
+   - Achieves comparable accuracy (94.67%) with fewer lookups (42.4% ratio)
+   - Similar tool usage between Non-Think and Max-Think modes
+   - Performance difference comes from information utilization, not search depth
+
+3. **Search-Lookup Disconnection** (Gemini)
+   - Zero lookup ratio despite searching (0 `get_case_content` calls across all 150 questions)
+   - Agentic RAG (73.33%) performs **worse** than Naïve RAG (89.33%)
+   - Increasing reasoning effort actually **decreased** tool usage (4.40 → 3.29 avg calls)
 
 
 ## License
