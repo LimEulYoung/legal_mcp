@@ -5,8 +5,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from fastmcp import FastMCP
 
-# Load .env file from mcp directory
-env_path = Path(__file__).parent.parent / '.env'
+# Load .env file from project root
+env_path = Path(__file__).parent.parent.parent / '.env'
 load_dotenv(env_path)
 
 from .config import config

@@ -48,3 +48,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Data files (available on Hugging Face: ducut91/legal_mcp)
+data/
