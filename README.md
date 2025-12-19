@@ -290,11 +290,3 @@ Three distinct tool-use patterns were observed:
 ## License
 
 This project is licensed under the MIT License.
-
-## Contact
-
-- Eul Young Lim - ey_lim@o.cnu.ac.kr
-- Jihun Park (Corresponding Author) - jihun.park@cnu.ac.kr
-
-Chungnam National University, Daejeon, South Korea
-
