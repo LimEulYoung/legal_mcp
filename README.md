@@ -1,15 +1,10 @@
 # Agentic RAG for Civil Law Systems
 
-This repository contains the code and benchmark scripts for the paper:
+This repository contains the code and benchmark scripts for reproducibility.
 
-**"Agentic RAG for Civil Law Systems: Tool-Use Dynamics in Korean Bar Exam Question Answering"**
+![Agentic RAG Architecture](figure2.png)
 
-*Eul Young Lim and Jihun Park*
-Chungnam National University, South Korea
-
-## Abstract
-
-Legal problem-solving in civil law systems requires hierarchical, multi-step exploration from codified statutes to interpretive case law. This study applies an agentic RAG architecture to the civil law domain, where LLMs autonomously select and iteratively invoke tools, and analyzes how tool-use dynamics affect performance. Using the Model Context Protocol (MCP), our system provides five tools—statute search, article lookup, case search, judgment lookup, and statute TOC browsing—emulating legal professionals' research workflows. Evaluated on 150 multiple-choice questions from the 2025 Korean Bar Examination, agentic RAG achieved **96.7% accuracy with GPT-5.1 (High)** and **94.7% with Claude Sonnet 4.5 (Max-Thinking)**, representing significant 10.7 percentage point improvements over Naïve RAG (McNemar's test, *p* < .01). However, Gemini 2.5 Pro showed a 16.0 percentage point degradation (*p* < .001). Analysis revealed three distinct tool-use patterns: GPT-5.1 demonstrated *Deep Exploration* (63% judgment lookup ratio); Claude showed *Efficient Utilization* (42% lookup ratio with comparable performance); Gemini exhibited *Search-Lookup Disconnection* (0% lookup ratio) and *Tool Aversion*. These tool-use failures caused performance degradation. Our findings demonstrate that agentic RAG effectiveness depends critically on model-specific tool-use propensities, highlighting the importance of evaluating tool-use dynamics beyond accuracy when building legal AI systems.
+*Comparison between a human lawyer's iterative research process (left) and the proposed agentic RAG system (right). Both follow a similar pattern: searching for relevant statutes and cases, then looking up full content. Cross-reference arrows indicate iterative refinement based on discovered legal sources.*
 
 ## Repository Structure
 
