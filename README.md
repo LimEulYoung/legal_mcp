@@ -58,8 +58,13 @@ The dataset includes:
   - Civil Law (민사법): 70 questions
   - Criminal Law (형사법): 40 questions
   - Public Law (공법): 40 questions
+  - Source: [Ministry of Justice (법무부)](https://www.corrections.go.kr/bbs/moj/150/591294/artclView.do)
 - **Court Cases**: 193,276 Korean court judgments (including 29,730 Constitutional Court decisions)
+  - Source: [Korea Open Law Information (국가법령정보 공동활용)](https://open.law.go.kr)
 - **Statutes**: 5,474 current Korean statutes with 200,633 individual articles
+  - Source: [Korea Open Law Information (국가법령정보 공동활용)](https://open.law.go.kr)
+
+All data is publicly available under Korean public data policies.
 
 ## MCP Server
 
