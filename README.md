@@ -76,43 +76,6 @@ A public MCP server is available for testing:
 https://mcp.crow-tit.com/sse
 ```
 
-### Local Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/LimEulYoung/legal_mcp.git
-cd legal_mcp
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-3. Configure environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your credentials
-```
-
-Required environment variables:
-```
-# Elasticsearch Configuration
-ES_HOST=your_elasticsearch_host
-ES_PORT=9200
-ES_SCHEME=http
-ES_USER=your_username
-ES_PASSWORD=your_password
-
-# Upstage API Configuration (REQUIRED for embeddings)
-UPSTAGE_API_KEY=your_upstage_api_key
-
-# Benchmark API Configuration
-ANTHROPIC_API_KEY=your_anthropic_api_key
-OPENAI_API_KEY=your_openai_api_key
-GOOGLE_API_KEY=your_google_api_key
-```
-
 ### MCP Tools
 
 The server provides five tools for legal research:
@@ -290,4 +253,5 @@ Three distinct tool-use patterns were observed:
 ## License
 
 This project is licensed under the MIT License.
+
 
