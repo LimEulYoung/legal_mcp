@@ -55,14 +55,14 @@ The benchmark dataset and legal database are available on Hugging Face:
 
 The dataset includes:
 - **Benchmark Questions**: 150 multiple-choice questions from the 14th Korean Bar Examination (2025)
-  - Civil Law (민사법): 70 questions
-  - Criminal Law (형사법): 40 questions
-  - Public Law (공법): 40 questions
-  - Source: [Ministry of Justice (법무부)](https://www.corrections.go.kr/bbs/moj/150/591294/artclView.do)
+  - Civil Law: 70 questions
+  - Criminal Law: 40 questions
+  - Public Law: 40 questions
+  - Source: [Ministry of Justice](https://www.corrections.go.kr/bbs/moj/150/591294/artclView.do)
 - **Court Cases**: 193,276 Korean court judgments (including 29,730 Constitutional Court decisions)
-  - Source: [Korea Open Law Information (국가법령정보 공동활용)](https://open.law.go.kr)
+  - Source: [Korea Open Law Information](https://open.law.go.kr)
 - **Statutes**: 5,474 current Korean statutes with 200,633 individual articles
-  - Source: [Korea Open Law Information (국가법령정보 공동활용)](https://open.law.go.kr)
+  - Source: [Korea Open Law Information](https://open.law.go.kr)
 
 All data is publicly available under Korean public data policies.
 
@@ -129,12 +129,12 @@ The server provides five tools for legal research:
 
 | Statute | ID | Statute | ID |
 |---------|----|---------|----|
-| Constitution (헌법) | 1444 | Framework Act on Administration (행정기본법) | 14041 |
-| Civil Act (민법) | 1706 | Administrative Procedure Act (행정절차법) | 1362 |
-| Commercial Act (상법) | 1702 | Administrative Litigation Act (행정소송법) | 1363 |
-| Civil Procedure Act (민사소송법) | 1700 | Constitutional Court Act (헌법재판소법) | 11233 |
-| Criminal Act (형법) | 1692 | | |
-| Criminal Procedure Act (형사소송법) | 1671 | | |
+| Constitution | 1444 | Framework Act on Administration | 14041 |
+| Civil Act | 1706 | Administrative Procedure Act | 1362 |
+| Commercial Act | 1702 | Administrative Litigation Act | 1363 |
+| Civil Procedure Act | 1700 | Constitutional Court Act | 11233 |
+| Criminal Act | 1692 | | |
+| Criminal Procedure Act | 1671 | | |
 
 ## Running Benchmarks
 
@@ -290,3 +290,4 @@ Three distinct tool-use patterns were observed:
 ## License
 
 This project is licensed under the MIT License.
+
