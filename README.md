@@ -49,10 +49,6 @@ legal_mcp_repo/
 
 ## Dataset
 
-The benchmark dataset and legal database are available on Hugging Face:
-
-**[ducut91/legal_mcp](https://huggingface.co/datasets/ducut91/legal_mcp)**
-
 The dataset includes:
 - **Benchmark Questions**: 150 multiple-choice questions from the 14th Korean Bar Examination (2025)
   - Civil Law: 70 questions
@@ -253,5 +249,6 @@ Three distinct tool-use patterns were observed:
 ## License
 
 This project is licensed under the MIT License.
+
 
 
