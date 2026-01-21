@@ -66,11 +66,7 @@ All data is publicly available under Korean public data policies.
 
 ### Public MCP Server
 
-A public MCP server is available for testing:
-
-```
-https://mcp.crow-tit.com/sse
-```
+Available upon acceptance.
 
 ### MCP Tools
 
@@ -249,6 +245,7 @@ Three distinct tool-use patterns were observed:
 ## License
 
 This project is licensed under the MIT License.
+
 
 
 
