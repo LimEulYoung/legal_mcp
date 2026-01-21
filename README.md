@@ -4,8 +4,6 @@ This repository contains the code, benchmark scripts, and supplementary material
 
 ## Paper Supplements
 
-The full appendix (excluded from the main paper due to page limits) is available here:
-
 **[Download Full Appendix (PDF)](appendix.pdf)** — Tool specifications, prompt templates, detailed experimental results, and additional analyses.
 
 ---
