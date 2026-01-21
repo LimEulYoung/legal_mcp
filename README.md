@@ -6,13 +6,13 @@ This repository contains the code, benchmark scripts, and supplementary material
 
 The full appendix (excluded from the main paper due to page limits) is available here:
 
-**[Download Full Appendix (PDF)](APPENDIX.pdf)** — Tool specifications, prompt templates, detailed experimental results, and additional analyses.
+**[Download Full Appendix (PDF)](appendix.pdf)** — Tool specifications, prompt templates, detailed experimental results, and additional analyses.
 
 ---
 
 ## Overview
 
-![Agentic RAG Architecture](assets/figures/figure2.png)
+![Agentic RAG Architecture](assets/figure2.png)
 
 *Comparison between a human lawyer's iterative research process (left) and the proposed agentic RAG system (right). Both follow a similar pattern: searching for relevant statutes and cases, then looking up full content.*
 
@@ -20,7 +20,7 @@ The full appendix (excluded from the main paper due to page limits) is available
 
 ```
 ├── README.md
-├── APPENDIX.pdf              # 📄 Full paper appendix
+├── appendix.pdf              # Full paper appendix
 ├── requirements.txt
 ├── .env.example
 │
@@ -93,13 +93,13 @@ The server provides five tools for legal research:
 
 ```bash
 # Closed Book
-python benchmark/closed_book/benchmark_gpt_5.1_high.py --limit 10 --workers 5
+python benchmark/closed_book/closed_book_benchmark_gpt_5.1_high.py --limit 10 --workers 5
 
-# Naïve RAG
-python benchmark/naive_rag/benchmark_gpt_5.1_high.py --limit 10 --workers 5
+# Naive RAG
+python benchmark/naive_rag/rag_benchmark_gpt_5.1_high.py --limit 10 --workers 5
 
 # Agentic RAG (Ours)
-python benchmark/agentic_rag/benchmark_gpt_5.1_high.py --limit 10 --workers 5
+python benchmark/agentic_rag/mcp_benchmark_gpt_5.1_high.py --limit 10 --workers 5
 ```
 
 ## Results Summary
@@ -120,7 +120,7 @@ python benchmark/agentic_rag/benchmark_gpt_5.1_high.py --limit 10 --workers 5
 | **Efficient Utilization** | Claude | Comparable accuracy (94.67%) with fewer lookups (42.4%) |
 | **Search-Lookup Disconnection** | Gemini | Zero lookups → Agentic RAG worse than Naïve RAG |
 
-> See [APPENDIX.pdf](APPENDIX.pdf) for detailed results and analyses.
+> See [appendix.pdf](appendix.pdf) for detailed results and analyses.
 
 ## License
 
