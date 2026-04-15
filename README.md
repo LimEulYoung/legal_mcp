@@ -2,12 +2,6 @@
 
 This repository contains the code, benchmark scripts, and supplementary materials for reproducibility.
 
-## Paper Supplements
-
-**[Download Full Appendix (PDF)](appendix.pdf)** — Tool specifications, prompt templates, detailed experimental results, and additional analyses.
-
----
-
 ## Overview
 
 ![Agentic RAG Architecture](assets/figure2.png)
@@ -142,7 +136,6 @@ The `--condition` parameter controls which MCP tools are available:
 | **Efficient Utilization** | Claude | Comparable accuracy (94.67%) with fewer lookups (42.4%) |
 | **Search-Lookup Disconnection** | Gemini | Zero lookups → Agentic RAG worse than Naïve RAG |
 
-> See [appendix.pdf](appendix.pdf) for detailed results and analyses.
 
 ## License
 
