@@ -120,21 +120,21 @@ The `--condition` parameter controls which MCP tools are available:
 
 ## Results Summary
 
-### Overall Performance (Accuracy %)
+### Overall Performance (Accuracy %, N=300, 2025-2026 Korean Bar Exam)
 
 | Model | Closed Book | Naïve RAG | Agentic RAG |
 |-------|-------------|-----------|-------------|
-| Claude 4.5 (Max-Think) | 51.33 | 84.00 | **94.67** |
-| GPT-5.1 (High) | 54.00 | 86.00 | **96.67** |
-| Gemini 2.5 (High) | 60.67 | **89.33** | 73.33 |
+| Claude Sonnet 4.5 (Max-Think) | 54.00 | 82.67 | **92.67** |
+| GPT-5.1 (High) | 50.00 | 83.67 | **95.33** |
+| Gemini 2.5 Pro (High) | 64.33 | **90.33** | 75.67 |
 
 ### Key Findings
 
 | Pattern | Model | Observation |
 |---------|-------|-------------|
-| **Deep Exploration** | GPT-5.1 | Highest lookup ratio (63.3%) → Best accuracy (96.67%) |
-| **Efficient Utilization** | Claude | Comparable accuracy (94.67%) with fewer lookups (42.4%) |
-| **Search-Lookup Disconnection** | Gemini | Zero lookups → Agentic RAG worse than Naïve RAG |
+| **Intensive Tool Use** | GPT-5.1 | 15.37 avg tool calls, highest accuracy (95.33%) |
+| **Efficient Utilization** | Claude | 10.18 avg tool calls, 92.67% accuracy — reasoning depth over retrieval volume |
+| **Tool Aversion** | Gemini | 2.98 avg tool calls, 10% zero-call questions → worse than Naïve RAG |
 
 
 ## License
