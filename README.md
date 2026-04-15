@@ -30,12 +30,13 @@ This repository contains the code, benchmark scripts, and supplementary material
 │   └── utils/
 │
 ├── benchmark/
-│   ├── data/                 # Benchmark dataset
-│   │   └── benchmark.csv     # 150 Korean Bar Exam questions
-│   ├── closed_book/          # Closed Book experiments
-│   ├── naive_rag/            # Naïve RAG experiments
-│   ├── agentic_rag/          # Agentic RAG experiments
-│   └── results/              # Experiment results
+│   ├── scripts/              # Benchmark scripts (all experiments)
+│   ├── results/              # Experiment results
+│   │   ├── 2025/             #   2025 Bar Exam results
+│   │   ├── 2026/             #   2026 Bar Exam results
+│   │   └── ablation/         #   Ablation study results
+│   ├── benchmark_2025.csv    # 2025 benchmark questions
+│   └── benchmark_2026.csv    # 2026 benchmark questions
 │
 ├── docs/                     # Documentation
 │
@@ -80,25 +81,48 @@ The server provides five tools for legal research:
 1. Configure API keys in `.env` (see `.env.example`)
 2. Install dependencies: `pip install -r requirements.txt`
 
-### Command-Line Arguments
+### Benchmark Scripts
 
-| Argument | Description | Default |
-|----------|-------------|---------|
-| `--limit` | Number of questions to run | All (150) |
-| `--workers` | Number of parallel workers | 3 |
+All scripts are located in `benchmark/scripts/` and share common parameters: `--model`, `--effort`, `--workers`, `--limit`, `--csv`, `--output`. Use `--help` for details.
+
+| Experiment | Claude (Anthropic API) | GPT (OpenAI API) | Gemini (Google GenAI API) |
+|------------|----------------------|-------------------|--------------------------|
+| Closed Book | `closed_book_benchmark_claude.py` | `closed_book_benchmark_gpt.py` | `closed_book_benchmark_gemini.py` |
+| Naïve RAG | `rag_benchmark_claude.py` | `rag_benchmark_gpt.py` | `rag_benchmark_gemini.py` |
+| Agentic RAG | `mcp_benchmark_claude.py` | `mcp_benchmark_gpt.py` | `mcp_benchmark_gemini.py` |
+| Ablation | `ablation_claude.py` | `ablation_gpt.py` | `ablation_gemini.py` |
+
+**Model-specific notes:**
+- **Claude**: `--effort` none/low/medium/high/max, MCP uses beta API
+- **GPT**: OpenAI Responses API, `--effort` none/low/medium/high
+- **Gemini**: async structure (asyncio), `--effort` low/medium/high/max
 
 ### Examples
 
 ```bash
 # Closed Book
-python benchmark/closed_book/closed_book_benchmark_gpt_5.1_high.py --limit 10 --workers 5
+python benchmark/scripts/closed_book_benchmark_gpt.py --model gpt-5.1 --effort high --limit 10 --workers 3
 
-# Naive RAG
-python benchmark/naive_rag/rag_benchmark_gpt_5.1_high.py --limit 10 --workers 5
+# Naïve RAG
+python benchmark/scripts/rag_benchmark_claude.py --model claude-sonnet-4-5-20250929 --effort max --workers 2
 
 # Agentic RAG (Ours)
-python benchmark/agentic_rag/mcp_benchmark_gpt_5.1_high.py --limit 10 --workers 5
+python benchmark/scripts/mcp_benchmark_gemini.py --model gemini-2.5-pro --effort high --workers 3
+
+# Ablation (tool combination)
+python benchmark/scripts/ablation_gpt.py --condition case_only --model gpt-5.1 --effort high --workers 3
 ```
+
+### Ablation: Tool Combination
+
+The `--condition` parameter controls which MCP tools are available:
+
+| Condition | Description | Tools Available |
+|-----------|-------------|-----------------|
+| `full` | All tools (control) | search_cases, get_case_content, search_statutes, get_statute_content, list_statute_articles (5) |
+| `no_case_content` | No case full-text lookup | search_cases, search_statutes, get_statute_content, list_statute_articles (4) |
+| `statute_only` | Statute tools only | search_statutes, get_statute_content, list_statute_articles (3) |
+| `case_only` | Case search only (summary) | search_cases (1) |
 
 ## Results Summary
 
