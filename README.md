@@ -1,7 +1,7 @@
 # Agentic RAG for Legal Question Answering in Civil Law
 
 > **Agentic RAG for Legal Question Answering in Civil Law: Evidence from the Korean Bar Examination**
-> Eul Young Lim and Jihun Park — IEEE Access, 2026
+> Eul Young Lim and Jihun Park (under review)
 
 This repository contains the code, benchmark scripts, and supplementary materials for reproducibility.
 
