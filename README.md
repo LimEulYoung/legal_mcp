@@ -57,6 +57,8 @@ The server provides five tools for legal research:
 | `get_statute_content` | Retrieve statute articles (full or specific articles) |
 | `list_statute_articles` | List table of contents for a statute |
 
+**MCP Server URL (SSE):** `https://mcp.crow-tit.com/sse`
+
 ### Quick Access Statute IDs
 
 | Statute | ID | Statute | ID |
