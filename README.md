@@ -1,4 +1,7 @@
-# Agentic RAG for Civil Law Systems
+# Agentic RAG for Legal Question Answering in Civil Law
+
+> **Agentic RAG for Legal Question Answering in Civil Law: Evidence from the Korean Bar Examination**
+> Eul Young Lim and Jihun Park — IEEE Access, 2026
 
 This repository contains the code, benchmark scripts, and supplementary materials for reproducibility.
 
@@ -6,13 +9,12 @@ This repository contains the code, benchmark scripts, and supplementary material
 
 ![Agentic RAG Architecture](assets/figure2.png)
 
-*Comparison between a human lawyer's iterative research process (left) and the proposed agentic RAG system (right). Both follow a similar pattern: searching for relevant statutes and cases, then looking up full content.*
+*Comparison of (a) Naïve RAG and (b) the proposed agentic RAG. Naïve RAG performs a single retrieval pass, while agentic RAG enables iterative tool selection and self-correction.*
 
 ## Repository Structure
 
 ```
 ├── README.md
-├── appendix.pdf              # Full paper appendix
 ├── requirements.txt
 ├── .env.example
 │
@@ -41,7 +43,7 @@ This repository contains the code, benchmark scripts, and supplementary material
 
 | Data | Description | Source |
 |------|-------------|--------|
-| Benchmark Questions | 150 MCQs from 14th Korean Bar Exam (2025): Civil (70), Criminal (40), Public (40) | [Ministry of Justice](https://www.corrections.go.kr/bbs/moj/150/591294/artclView.do) |
+| Benchmark Questions | 300 MCQs from 14th-15th Korean Bar Exam (2025-2026): Civil (140), Criminal (80), Public (80) | [Ministry of Justice](https://www.moj.go.kr) |
 | Court Cases | 193,276 Korean court judgments (incl. 29,730 Constitutional Court decisions) | [Korea Open Law Information](https://open.law.go.kr) |
 | Statutes | 5,474 current Korean statutes with 200,633 individual articles | [Korea Open Law Information](https://open.law.go.kr) |
 
