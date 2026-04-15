@@ -85,6 +85,7 @@ All scripts are located in `benchmark/scripts/` and share common parameters: `--
 | Naïve RAG | `rag_benchmark_claude.py` | `rag_benchmark_gpt.py` | `rag_benchmark_gemini.py` |
 | Agentic RAG | `mcp_benchmark_claude.py` | `mcp_benchmark_gpt.py` | `mcp_benchmark_gemini.py` |
 | Ablation | `ablation_claude.py` | `ablation_gpt.py` | `ablation_gemini.py` |
+| Prompt Guidance | — | — | `mcp_benchmark_gemini_guided_high.py`, `mcp_benchmark_gemini_guided_low.py` |
 
 **Model-specific notes:**
 - **Claude**: `--effort` none/low/medium/high/max, MCP uses beta API
@@ -117,6 +118,18 @@ The `--condition` parameter controls which MCP tools are available:
 | `no_case_content` | No case full-text lookup | search_cases, search_statutes, get_statute_content, list_statute_articles (4) |
 | `statute_only` | Statute tools only | search_statutes, get_statute_content, list_statute_articles (3) |
 | `case_only` | Case search only (summary) | search_cases (1) |
+
+### Prompt Guidance Experiment (Gemini)
+
+Gemini exhibited Tool Aversion under agentic RAG. These scripts test whether explicit tool-use guidance in the prompt can mitigate it. Thinking level is fixed per script (high/low), with `--limit` and `--workers` supported.
+
+```bash
+# Gemini 2.5 Pro with guided prompt (high thinking)
+python benchmark/scripts/mcp_benchmark_gemini_guided_high.py --workers 3
+
+# Gemini 2.5 Pro with guided prompt (low thinking)
+python benchmark/scripts/mcp_benchmark_gemini_guided_low.py --workers 3
+```
 
 ## Results Summary
 
