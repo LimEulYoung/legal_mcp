@@ -7,9 +7,9 @@ This repository contains the code, benchmark scripts, and supplementary material
 
 ## Overview
 
-![Agentic RAG Architecture](assets/figure2.png)
+![Human Lawyer Workflow vs. Agentic RAG](assets/figure1.png)
 
-*Comparison of (a) Naïve RAG and (b) the proposed agentic RAG. Naïve RAG performs a single retrieval pass, while agentic RAG enables iterative tool selection and self-correction.*
+*Parallel between (A) a human lawyer's iterative research workflow and (B) the proposed agentic RAG system, illustrated on a Civil Act §750/§766 traffic-accident query. Dashed arrows mark the step-by-step correspondence between the human process and the agentic tool-call trace.*
 
 ## Repository Structure
 
