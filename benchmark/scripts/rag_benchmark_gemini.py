@@ -61,9 +61,10 @@ def is_legacy_model(model: str) -> bool:
     return "2.5" in model or "2.0" in model
 
 
-def get_thinking_config(model: str, effort: str) -> types.ThinkingConfig:
+def get_thinking_config(model: str, effort: str, budget_override: int = None) -> types.ThinkingConfig:
     if is_legacy_model(model):
-        return types.ThinkingConfig(thinking_budget=EFFORT_TO_BUDGET[effort], include_thoughts=True)
+        budget = budget_override if budget_override is not None else EFFORT_TO_BUDGET[effort]
+        return types.ThinkingConfig(thinking_budget=budget, include_thoughts=True)
     else:
         return types.ThinkingConfig(thinking_level=EFFORT_TO_LEVEL[effort], include_thoughts=True)
 
@@ -77,13 +78,14 @@ def calc_cost(model: str, input_tokens: int, output_tokens: int) -> tuple:
 
 
 class RAGBenchmark:
-    def __init__(self, model: str, effort: str, num_workers: int = 3):
+    def __init__(self, model: str, effort: str, num_workers: int = 3, thinking_budget: int = None):
         self.es = Elasticsearch(ES_URL, http_auth=ES_AUTH)
         self.upstage = OpenAI(api_key=UPSTAGE_API_KEY, base_url="https://api.upstage.ai/v1")
         self.gemini_client = genai.Client()
         self.model = model
         self.effort = effort
-        self.thinking_config = get_thinking_config(model, effort)
+        self.thinking_budget = thinking_budget
+        self.thinking_config = get_thinking_config(model, effort, thinking_budget)
         self.results = []
         self.num_workers = num_workers
         self.print_lock = asyncio.Lock()
@@ -506,6 +508,7 @@ async def main():
     parser = argparse.ArgumentParser(description="통합 Gemini Naive RAG 벤치마크")
     parser.add_argument("--model", type=str, default="gemini-2.5-pro", help="Gemini 모델명 (기본: gemini-2.5-pro)")
     parser.add_argument("--effort", type=str, default="high", choices=["low", "medium", "high", "max"], help="추론 강도 (기본: high)")
+    parser.add_argument("--thinking-budget", type=int, default=None, help="Gemini 2.5계열 thinking_budget 직접 지정 (effort 무시, budget 스윕용. 예: 128 512 2048 8192 32768)")
     parser.add_argument("--limit", type=int, default=None, help="실행할 문제 수 (기본: 전체)")
     parser.add_argument("--workers", type=int, default=3, help="병렬 워커 수 (기본: 3)")
     parser.add_argument("--csv", type=str, default=None, help="벤치마크 CSV 경로 (기본: ../benchmark_2026.csv)")
@@ -514,6 +517,7 @@ async def main():
 
     model = args.model
     effort = args.effort
+    thinking_budget = args.thinking_budget
     total_problems = args.limit if args.limit else TOTAL_PROBLEMS
     csv_path = args.csv or os.path.join(os.path.dirname(__file__), "../benchmark_2026.csv")
 
@@ -522,12 +526,14 @@ async def main():
     else:
         result_dir = os.path.join(os.path.dirname(__file__), "../results/2026")
         model_slug = model.replace("-", "_").replace(".", "_")
-        output_file = os.path.join(result_dir, f"rag_benchmark_{model_slug}_{effort}_result.json")
+        eff_slug = f"budget{thinking_budget}" if thinking_budget is not None else effort
+        output_file = os.path.join(result_dir, f"rag_benchmark_{model_slug}_{eff_slug}_result.json")
 
     os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
 
     if is_legacy_model(model):
-        thinking_info = f"thinking_budget={EFFORT_TO_BUDGET[effort]}"
+        _eff_budget = thinking_budget if thinking_budget is not None else EFFORT_TO_BUDGET[effort]
+        thinking_info = f"thinking_budget={_eff_budget}"
     else:
         thinking_info = f"thinking_level={EFFORT_TO_LEVEL[effort]}"
 
@@ -542,12 +548,12 @@ async def main():
     start_time = datetime.now()
     metadata = {
         "experiment_name": "Naive RAG Benchmark",
-        "model": model, "effort": effort, "thinking_info": thinking_info,
+        "model": model, "effort": effort, "thinking_budget": thinking_budget, "thinking_info": thinking_info,
         "max_workers": args.workers, "start_time": start_time.isoformat(),
         "total_problems": total_problems,
     }
 
-    benchmark = RAGBenchmark(model=model, effort=effort, num_workers=args.workers)
+    benchmark = RAGBenchmark(model=model, effort=effort, num_workers=args.workers, thinking_budget=thinking_budget)
     results = await benchmark.run_benchmark_batch(
         csv_path, start_idx=0, batch_size=total_problems,
         save_path=output_file, metadata=metadata

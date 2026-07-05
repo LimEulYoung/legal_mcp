@@ -33,7 +33,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), "../../.env"))
 os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY") or "your-google-api-key"
 
 # MCP 서버 URL (SSE 방식)
-MCP_SERVER_URL = "https://mcp.crow-tit.com/sse"
+MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8000/sse")  # self-hosted server: MCP_TRANSPORT=sse python -m src.server
 
 # 기본 설정
 TOTAL_PROBLEMS = 150
@@ -87,10 +87,10 @@ def is_legacy_model(model: str) -> bool:
     return "2.5" in model or "2.0" in model
 
 
-def get_thinking_config(model: str, effort: str) -> types.ThinkingConfig:
-    """모델과 effort에 따른 ThinkingConfig 생성"""
+def get_thinking_config(model: str, effort: str, budget_override: int = None) -> types.ThinkingConfig:
+    """모델과 effort에 따른 ThinkingConfig 생성. budget_override 지정 시 effort 무시(2.5계열 budget 스윕용)."""
     if is_legacy_model(model):
-        budget = EFFORT_TO_BUDGET[effort]
+        budget = budget_override if budget_override is not None else EFFORT_TO_BUDGET[effort]
         return types.ThinkingConfig(
             thinking_budget=budget,
             include_thoughts=True,
@@ -117,11 +117,12 @@ def calc_cost(model: str, input_tokens: int, output_tokens: int) -> tuple:
 
 
 class MCPBenchmark:
-    def __init__(self, model: str, effort: str):
+    def __init__(self, model: str, effort: str, thinking_budget: int = None):
         self.client = genai.Client()
         self.model = model
         self.effort = effort
-        self.thinking_config = get_thinking_config(model, effort)
+        self.thinking_budget = thinking_budget
+        self.thinking_config = get_thinking_config(model, effort, thinking_budget)
         self.results = []
         self.print_lock = asyncio.Lock()
 
@@ -466,6 +467,7 @@ async def main():
     parser = argparse.ArgumentParser(description="통합 Gemini MCP 벤치마크")
     parser.add_argument("--model", type=str, default="gemini-2.5-pro", help="Gemini 모델명 (기본: gemini-2.5-pro)")
     parser.add_argument("--effort", type=str, default="high", choices=["low", "medium", "high", "max"], help="추론 강도 (기본: high)")
+    parser.add_argument("--thinking-budget", type=int, default=None, help="Gemini 2.5계열 thinking_budget 직접 지정 (effort 무시, budget 스윕용. 예: 128 1024 4096 16384 32768)")
     parser.add_argument("--limit", type=int, default=None, help="실행할 문제 수 (기본: 전체)")
     parser.add_argument("--workers", type=int, default=3, help="병렬 워커 수 (기본: 3)")
     parser.add_argument("--csv", type=str, default=None, help="벤치마크 CSV 경로 (기본: ../benchmark_2026.csv)")
@@ -474,6 +476,7 @@ async def main():
 
     model = args.model
     effort = args.effort
+    thinking_budget = args.thinking_budget
     total_problems = args.limit if args.limit else TOTAL_PROBLEMS
 
     # CSV 경로
@@ -486,14 +489,16 @@ async def main():
         result_dir = os.path.join(os.path.dirname(__file__), "../results/2026")
         # 모델명에서 파일명 생성 (예: gemini-2.5-pro → gemini_2.5_pro)
         model_slug = model.replace("-", "_").replace(".", "_")
-        output_file = os.path.join(result_dir, f"mcp_benchmark_{model_slug}_{effort}_result.json")
+        eff_slug = f"budget{thinking_budget}" if thinking_budget is not None else effort
+        output_file = os.path.join(result_dir, f"mcp_benchmark_{model_slug}_{eff_slug}_result.json")
 
     # 결과 디렉토리 생성
     os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
 
     # thinking config 정보 출력
     if is_legacy_model(model):
-        thinking_info = f"thinking_budget={EFFORT_TO_BUDGET[effort]}"
+        _eff_budget = thinking_budget if thinking_budget is not None else EFFORT_TO_BUDGET[effort]
+        thinking_info = f"thinking_budget={_eff_budget}"
     else:
         thinking_info = f"thinking_level={EFFORT_TO_LEVEL[effort]}"
 
@@ -510,6 +515,7 @@ async def main():
         "experiment_name": "MCP RAG Benchmark",
         "model": model,
         "effort": effort,
+        "thinking_budget": thinking_budget,
         "thinking_info": thinking_info,
         "max_workers": args.workers,
         "mcp_server_url": MCP_SERVER_URL,
@@ -517,7 +523,7 @@ async def main():
         "total_problems": total_problems,
     }
 
-    benchmark = MCPBenchmark(model=model, effort=effort)
+    benchmark = MCPBenchmark(model=model, effort=effort, thinking_budget=thinking_budget)
     results = await benchmark.run_benchmark_batch(
         csv_path,
         start_idx=0,

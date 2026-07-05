@@ -39,7 +39,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), "../../.env"))
 os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY") or "your-google-api-key"
 
 # MCP 서버 URL (SSE 방식)
-MCP_SERVER_URL = "https://mcp.crow-tit.com/sse"
+MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8000/sse")  # self-hosted server: MCP_TRANSPORT=sse python -m src.server
 
 # 기본 설정
 TOTAL_PROBLEMS = 150
