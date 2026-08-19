@@ -1,7 +1,8 @@
 # Agentic RAG for Legal Question Answering in Civil Law
 
-> **Agentic RAG for Legal Question Answering in Civil Law: Evidence from the Korean Bar Examination**
-> Eul Young Lim and Jihun Park (under review)
+> **Agentic RAG for Legal Question Answering in Civil Law: Evidence From the Korean Bar Examination**
+> Eul Young Lim and Jihun Park
+> *IEEE Access*, vol. 14, pp. 124441–124458, 2026. [doi:10.1109/ACCESS.2026.3722717](https://doi.org/10.1109/ACCESS.2026.3722717) — open access
 
 This repository contains the code, benchmark scripts, and supplementary materials for reproducibility.
 
@@ -205,4 +206,4 @@ Dense = dense KNN + case summaries (main-text Naïve RAG); Hybrid-Sum = hybrid r
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License — see [LICENSE](LICENSE).
