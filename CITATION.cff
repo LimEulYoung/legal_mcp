@@ -1,0 +1,65 @@
+cff-version: 1.2.0
+title: >-
+  Agentic RAG for Legal Question Answering in Civil Law — research prototype
+  and benchmark
+abstract: >-
+  Reproducibility archive for the IEEE Access paper: the agentic RAG prototype,
+  the 300-question Korean Bar Examination benchmark, the baseline and ablation
+  scripts, and the per-model results. Frozen as it stood for the paper; the
+  maintained system is legal-search-mcp.
+message: >-
+  If you use this material in research, please cite the paper under
+  preferred-citation.
+type: software
+authors:
+  - family-names: Lim
+    given-names: Eul Young
+    orcid: https://orcid.org/0009-0004-0201-1448
+    affiliation: Chungnam National University
+  - family-names: Park
+    given-names: Jihun
+    orcid: https://orcid.org/0000-0003-3745-886X
+    affiliation: Chungnam National University
+license: MIT
+repository-code: https://github.com/LimEulYoung/legal_mcp
+keywords:
+  - agentic-rag
+  - legal-question-answering
+  - korean-bar-examination
+  - model-context-protocol
+  - benchmark
+preferred-citation:
+  type: article
+  title: >-
+    Agentic RAG for Legal Question Answering in Civil Law: Evidence From the
+    Korean Bar Examination
+  authors:
+    - family-names: Lim
+      given-names: Eul Young
+      orcid: https://orcid.org/0009-0004-0201-1448
+      affiliation: Chungnam National University
+    - family-names: Park
+      given-names: Jihun
+      orcid: https://orcid.org/0000-0003-3745-886X
+      affiliation: Chungnam National University
+  journal: IEEE Access
+  publisher:
+    name: Institute of Electrical and Electronics Engineers
+  volume: 14
+  start: 124441
+  end: 124458
+  year: 2026
+  issn: 2169-3536
+  doi: 10.1109/ACCESS.2026.3722717
+  url: https://ieeexplore.ieee.org/document/11648184
+references:
+  - type: software
+    title: Legal Search MCP
+    notes: Maintained successor to this prototype; use this for anything but reproduction.
+    authors:
+      - family-names: Lim
+        given-names: Eul Young
+        orcid: https://orcid.org/0009-0004-0201-1448
+    repository-code: https://github.com/LimEulYoung/legal-search-mcp
+    url: https://crow-tit.com
+    license: MIT

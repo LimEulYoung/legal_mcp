@@ -4,7 +4,17 @@
 > Eul Young Lim and Jihun Park
 > *IEEE Access*, vol. 14, pp. 124441–124458, 2026. [doi:10.1109/ACCESS.2026.3722717](https://doi.org/10.1109/ACCESS.2026.3722717) — open access
 
-This repository contains the code, benchmark scripts, and supplementary materials for reproducibility.
+> [!IMPORTANT]
+> **This repository is the frozen research artifact for the paper** — the prototype, the
+> benchmark scripts and the per-model results, kept as they stood so the reported numbers
+> can be reproduced. It is not maintained for use.
+>
+> **For actual use, go to [legal-search-mcp](https://github.com/LimEulYoung/legal-search-mcp).**
+> That is the maintained descendant of this prototype: a redesigned MCP server over a much
+> larger corpus (220k+ judgments, statutes with their amendment history, sentencing
+> guidelines), which installs and runs from a clone with a bundled sample, and is also
+> hosted — free key at [crow-tit.com](https://crow-tit.com). The server in this repository
+> expects an Elasticsearch cluster you would have to build and populate yourself.
 
 ## Overview
 
@@ -51,6 +61,9 @@ This repository contains the code, benchmark scripts, and supplementary material
 ## MCP Tools
 
 The server provides five tools for legal research:
+
+*These are the prototype's tools, as evaluated in the paper. The maintained server has a
+different toolset — see [legal-search-mcp](https://github.com/LimEulYoung/legal-search-mcp).*
 
 | Tool | Description |
 |------|-------------|
