@@ -9,7 +9,7 @@
 > benchmark scripts and the per-model results, kept as they stood so the reported numbers
 > can be reproduced. It is not maintained for use.
 >
-> **For actual use, go to [legal-search-mcp](https://github.com/LimEulYoung/legal-search-mcp).**
+> **For actual use, go to [lawful-mcp](https://github.com/LimEulYoung/lawful-mcp).**
 > That is the maintained descendant of this prototype: a redesigned MCP server over a much
 > larger corpus (220k+ judgments, statutes with their amendment history, sentencing
 > guidelines), which installs and runs from a clone with a bundled sample, and is also
@@ -63,7 +63,7 @@
 The server provides five tools for legal research:
 
 *These are the prototype's tools, as evaluated in the paper. The maintained server has a
-different toolset — see [legal-search-mcp](https://github.com/LimEulYoung/legal-search-mcp).*
+different toolset — see [lawful-mcp](https://github.com/LimEulYoung/lawful-mcp).*
 
 | Tool | Description |
 |------|-------------|
